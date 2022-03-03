@@ -1,0 +1,15 @@
+plugins {
+    id 'application'
+}
+
+application {
+	mainClass = 'springplayground.MainGenericApplicationContext'
+}
+
+dependencies {
+	implementation 'org.springframework:spring-context:5.3.16'
+}
+
+repositories {
+	mavenCentral()
+}
