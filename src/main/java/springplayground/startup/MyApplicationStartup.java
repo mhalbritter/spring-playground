@@ -19,16 +19,12 @@ public class MyApplicationStartup implements ApplicationStartup {
 
 	@Override
 	public StartupStep start(String name) {
-		var step = new Step(id, id == 0 ? null : id, name);
-		id++;
-		return step;
+		return new Step(id++, name);
 	}
 
 	private static class Step implements StartupStep {
 
 		private final long id;
-
-		private final Long parentId;
 
 		private final String name;
 
@@ -36,9 +32,8 @@ public class MyApplicationStartup implements ApplicationStartup {
 
 		private final MyTags tags = new MyTags();
 
-		private Step(long id, Long parentId, String name) {
+		private Step(long id, String name) {
 			this.id = id;
-			this.parentId = parentId;
 			this.name = name;
 			this.started = System.nanoTime();
 		}
@@ -55,7 +50,10 @@ public class MyApplicationStartup implements ApplicationStartup {
 
 		@Override
 		public Long getParentId() {
-			return parentId;
+			if (id == 0) {
+				return null;
+			}
+			return id - 1;
 		}
 
 		@Override
